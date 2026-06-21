@@ -1,0 +1,2 @@
+skyfield==1.49
+requests==2.31.0
