@@ -1,6 +1,3 @@
-# main.py
-# Entry point of the application.
-
 import sys
 import logging
 from satellite_tracker import (
@@ -31,34 +28,28 @@ def main():
     logger.info("Application started")
 
     try:
-        # Step 1: Load satellites
         satellites = get_satellites()
         show_satellite_list(satellites)
 
-        # Step 2: Get observer location
         latitude, longitude, elevation = get_observer_location()
 
-        # Step 3: Calculate positions
         print("\n⚙️  Calculating satellite positions...")
         positions = calculate_satellite_positions(
             satellites, latitude, longitude, elevation
         )
         show_satellite_positions(positions)
 
-        # Step 4: Nearby satellites
         nearby = find_nearby_satellites(
             positions, max_distance_km=SEARCH_RADIUS_KM
         )
         show_nearby_satellites(nearby, max_distance_km=SEARCH_RADIUS_KM)
 
-        # Step 5: Upcoming passes
         passes = find_next_passes_for_all(
             satellites, latitude, longitude, elevation,
             hours_ahead=HOURS_AHEAD
         )
         show_next_passes(passes, hours_ahead=HOURS_AHEAD)
 
-        # Step 6: Summary report
         print_summary_report(
             positions   = positions,
             nearby      = nearby,
@@ -73,7 +64,6 @@ def main():
         logger.info("Application finished successfully")
 
     except KeyboardInterrupt:
-        # User pressed Ctrl+C
         print("\n\n  👋 Interrupted by user. Goodbye!")
         logger.info("Application interrupted by user (Ctrl+C)")
         sys.exit(0)
