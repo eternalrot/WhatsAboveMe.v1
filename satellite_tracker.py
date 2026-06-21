@@ -1,7 +1,3 @@
-# satellite_tracker.py
-# Core logic for satellite tracking.
-# Stage 7: Added logging, error handling, and input validation.
-
 from skyfield.api import load, EarthSatellite, wgs84
 import requests
 import logging
@@ -24,7 +20,6 @@ def setup_logging() -> logging.Logger:
     logger = logging.getLogger("satellite_tracker")
     logger.setLevel(logging.DEBUG)
 
-    # ── File handler — saves everything to app.log ────────
     file_handler = logging.FileHandler("app.log", encoding="utf-8")
     file_handler.setLevel(logging.DEBUG)
     file_format = logging.Formatter(
@@ -33,7 +28,6 @@ def setup_logging() -> logging.Logger:
     )
     file_handler.setFormatter(file_format)
 
-    # ── Console handler — shows warnings in terminal ──────
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.ERROR)
     console_format = logging.Formatter("  ⚠️  %(message)s")
@@ -44,11 +38,8 @@ def setup_logging() -> logging.Logger:
 
     return logger
 
-
-# Create logger — used throughout the entire module
 logger = setup_logging()
 
-# Timescale is Skyfield's internal clock
 ts = load.timescale()
 
 # ─────────────────────────────────────────────────────────
@@ -584,7 +575,6 @@ def print_summary_report(
     print(f"║  🛰️  Satellites : {len(positions)} tracked".ljust(65) + "║")
     print("╚" + "═" * 63 + "╝")
 
-    # Currently visible
     print("\n" + "─" * 65)
     print(f"  👁️  VISIBLE RIGHT NOW ({len(visible)} satellites)")
     print("─" * 65)
@@ -597,7 +587,6 @@ def print_summary_report(
     else:
         print("  No satellites currently above the horizon.")
 
-    # Nearby
     print("\n" + "─" * 65)
     print(f"  🎯 WITHIN {radius_km:.0f} KM ({len(nearby)} satellites)")
     print("─" * 65)
@@ -613,7 +602,6 @@ def print_summary_report(
     else:
         print(f"  No satellites within {radius_km:.0f} km right now.")
 
-    # Upcoming passes
     print("\n" + "─" * 65)
     print(f"  🔭 NEXT PASSES — {hours_ahead}h window ({len(passes)} found)")
     print("─" * 65)
